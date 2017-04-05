@@ -19,7 +19,7 @@ function buildLexRequestParams(input) {
     inputText: input,
     userId: userId,
     sessionAttributes: {}
-  };
+  }
 }
 
 var response = null;
@@ -27,19 +27,21 @@ var response = null;
 defineSupportCode(function({Then, When}) {
 
     When(/^I say "([^"]*)"$/, function(input, callback) {
-        console.log("I say:", input)
         var params = buildLexRequestParams(input)
-
         Lex.postText(params, function(err, data) {
           response = data.message
           callback()
-        });
+        })
     })
 
     Then(/^I receive "([^"]*)"$/, function(output, callback) {
-        console.log("I receive:", output)
         expect(response).to.equal(output)
         callback()
+    })
+
+    Then(/^a calendar event with the following details should be created$/, function(table, callback) {
+      // TODO: validate the event was created correctly
+      callback()
     })
 
 })
