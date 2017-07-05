@@ -1,8 +1,8 @@
 Feature: Book meeting room at a set time today
 
-  Scenario: Specify start time
-    When I say "Book me a meeting room for 8pm"
-    Then I receive "Ok, I've booked Amoy for you from 8pm today" <-- shouldnt we say "Ok, I've booked Amoy for you for 1 hour from 8pm today" instead? communicating the duration of the booking
+  Scenario: Specify room and start time
+    When I say "Book me the Amoy meeting room for 8pm"
+    Then I receive "Ok, I've booked Amoy from 8pm today for an hour"
     And a calendar event with the following details should be created
       | Title         | Start | End   | Room |
       | Booked by Col | 20:00 | 21:00 | Amoy |
