@@ -2,6 +2,9 @@ var {defineSupportCode} = require('cucumber')
 var AWS = require('aws-sdk')
 var expect = require('chai').expect
 
+var google = require('googleapis')
+var googleAuth = require('google-auth-library')
+
 const Lex = new AWS.LexRuntime({
   apiVersion: '2016-11-28',
   signatureVersion: 'v4',
