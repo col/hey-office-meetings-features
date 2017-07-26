@@ -5,6 +5,9 @@ var expect = require('chai').expect
 var google = require('googleapis')
 var googleAuth = require('google-auth-library')
 
+var CalendarUtils = require('../../lib/calendar_utils')
+var moment = require('moment')
+
 const Lex = new AWS.LexRuntime({
   apiVersion: '2016-11-28',
   signatureVersion: 'v4',
@@ -43,8 +46,20 @@ defineSupportCode(function({Then, When}) {
     })
 
     Then(/^a calendar event with the following details should be created$/, function(table, callback) {
-      // TODO: validate the event was created correctly
-      callback()
+      var data = table.hashes()[0]
+
+      // TODO: Stop being lazy and parse the date correctly!
+      var startHourMin = data.Start.split(":")
+      var startTime = moment().hours(startHourMin[0]).minutes(startHourMin[1]).seconds(0).milliseconds(0)
+
+      var endHourMin = data.End.split(":")
+      var endTime = moment().hours(endHourMin[0]).minutes(endHourMin[1]).seconds(0).milliseconds(0)
+
+      CalendarUtils.findEvent(data.Title, startTime, endTime, null, (event) => {
+        expect(event).to.not.be.null
+        callback()
+      })
+
     })
 
 })
